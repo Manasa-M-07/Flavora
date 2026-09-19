@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Register - Flavora</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <i class="fa-solid fa-leaf"></i> FLAVORA
+            </a>
+            <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="recipes.html">Explore</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                </ul>
+                <div class="d-flex align-items-center gap-3 mt-3 mt-lg-0">
+                    <button class="btn btn-link text-white text-decoration-none fs-5 p-0" id="themeToggleBtn" aria-label="Toggle Theme"><i class="fa-solid fa-sun"></i></button>
+                    <a href="favorites.html" class="btn btn-link text-white text-decoration-none fs-5 p-0" aria-label="Favorites"><i class="fa-solid fa-heart"></i></a>
+                    <a href="auth.html" class="btn btn-primary-custom btn-sm rounded-pill"><i class="fa-solid fa-user me-2"></i>Sign In</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container flex-grow-1 d-flex align-items-center justify-content-center py-5">
+        <div class="glass-card p-5" style="max-width: 450px; width: 100%;">
+            <div class="text-center mb-4">
+                <h3 class="display-font fw-bold text-accent" id="formTitle">Welcome Back</h3>
+                <p class="text-muted" id="formSubtitle">Login to your Flavora account</p>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="loginEmail" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" id="loginPassword" required>
+                </div>
+                <div class="d-flex justify-content-between mb-4">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="rememberMe">
+                        <label class="form-check-label text-muted small" for="rememberMe">Remember me</label>
+                    </div>
+                    <a href="#" class="text-accent small text-decoration-none">Forgot Password?</a>
+                </div>
+                <button type="submit" class="btn btn-primary-custom w-100 mb-3" id="loginBtn">Login</button>
+                <div class="text-center text-muted small">
+                    Don't have an account? <a href="#" class="text-accent text-decoration-none fw-bold" onclick="toggleForm('register')">Sign Up</a>
+                </div>
+            </form>
+
+            <!-- Register Form (Hidden by default) -->
+            <form id="registerForm" style="display: none;">
+                <div class="mb-3">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="regName" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="regEmail" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" id="regPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary-custom w-100 mb-3" id="registerBtn">Create Account</button>
+                <div class="text-center text-muted small">
+                    Already have an account? <a href="#" class="text-accent text-decoration-none fw-bold" onclick="toggleForm('login')">Login</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Professional Footer -->
+    <footer class="footer mt-auto pt-5 pb-4">
+        <div class="container">
+            <div class="row g-4 mb-4">
+                <div class="col-lg-4">
+                    <h3 class="display-font text-white mb-4"><i class="fa-solid fa-leaf text-primary-custom me-2"></i> FLAVORA</h3>
+                    <p class="text-muted mb-4 pe-lg-5">Discover. Cook. Enjoy. The world's most premium recipe discovery platform designed to help you explore delicious flavors.</p>
+                </div>
+                <div class="col-6 col-lg-2 offset-lg-1">
+                    <h5 class="text-white mb-4">Explore</h5>
+                    <ul class="list-unstyled d-flex flex-column gap-2">
+                        <li><a href="index.html" class="text-muted text-decoration-none hover-gold">Home</a></li>
+                        <li><a href="recipes.html" class="text-muted text-decoration-none hover-gold">Recipes</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h5 class="text-white mb-4">Account</h5>
+                    <ul class="list-unstyled d-flex flex-column gap-2">
+                        <li><a href="dashboard.html" class="text-muted text-decoration-none hover-gold">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h5 class="text-white mb-4">About Flavora</h5>
+                    <ul class="list-unstyled d-flex flex-column gap-2">
+                        <li><a href="about.html" class="text-muted text-decoration-none hover-gold">About Us</a></li>
+                        <li><a href="about.html#technology" class="text-muted text-decoration-none hover-gold">Technology</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-top border-secondary pt-4 mt-5 d-flex flex-column flex-md-row justify-content-between align-items-center">
+                <p class="text-muted small mb-0">&copy; 2026 Flavora. All rights reserved.</p>
+                <p class="text-muted small mb-0 mt-2 mt-md-0">Recipe data powered by <a href="https://www.themealdb.com" class="text-accent text-decoration-none" target="_blank">TheMealDB</a>.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toast-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        function toggleForm(type) {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const title = document.getElementById('formTitle');
+            const subtitle = document.getElementById('formSubtitle');
+
+            if (type === 'register') {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+                title.textContent = 'Create Account';
+                subtitle.textContent = 'Join Flavora today';
+            } else {
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+                title.textContent = 'Welcome Back';
+                subtitle.textContent = 'Login to your Flavora account';
+            }
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('loginBtn');
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Loading...';
+            btn.disabled = true;
+
+            try {
+                const res = await api.auth.login({
+                    email: document.getElementById('loginEmail').value,
+                    password: document.getElementById('loginPassword').value
+                });
+                
+                localStorage.setItem('token', res.data.token);
+                localStorage.setItem('user', JSON.stringify(res.data.user));
+                
+                showToast('Login successful!', 'success');
+                setTimeout(() => window.location.href = 'dashboard.html', 1000);
+            } catch (err) {
+                showToast(err.response?.data?.msg || 'Login failed', 'danger');
+                btn.innerHTML = 'Login';
+                btn.disabled = false;
+            }
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('registerBtn');
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Loading...';
+            btn.disabled = true;
+
+            try {
+                const res = await api.auth.register({
+                    name: document.getElementById('regName').value,
+                    email: document.getElementById('regEmail').value,
+                    password: document.getElementById('regPassword').value
+                });
+                
+                localStorage.setItem('token', res.data.token);
+                localStorage.setItem('user', JSON.stringify(res.data.user));
+                
+                showToast('Registration successful!', 'success');
+                setTimeout(() => window.location.href = 'dashboard.html', 1000);
+            } catch (err) {
+                showToast(err.response?.data?.msg || 'Registration failed', 'danger');
+                btn.innerHTML = 'Create Account';
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

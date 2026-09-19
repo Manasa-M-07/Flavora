@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Flavora</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <nav class="navbar navbar-expand-lg navbar-custom py-3 border-bottom">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <i class="fa-solid fa-leaf"></i> Flavora
+            </a>
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container py-5" style="max-width: 600px;">
+        <h2 class="fw-bold mb-4">My Profile</h2>
+
+        <div class="glass-card p-4 mb-4">
+            <h5 class="fw-bold mb-3 border-bottom pb-2">Update Information</h5>
+            <form id="profileForm">
+                <div class="mb-3">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="profileName" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Phone Number</label>
+                    <input type="text" class="form-control" id="profilePhone">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Profile Image</label>
+                    <input type="file" class="form-control" id="profileImage" accept="image/*">
+                </div>
+                <button type="submit" class="btn btn-primary-custom" id="updateBtn">Update Profile</button>
+            </form>
+        </div>
+
+        <div class="glass-card p-4 mb-4">
+            <h5 class="fw-bold mb-3 border-bottom pb-2">Change Password</h5>
+            <form id="passwordForm">
+                <div class="mb-3">
+                    <label class="form-label">Current Password</label>
+                    <input type="password" class="form-control" id="currentPassword" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">New Password</label>
+                    <input type="password" class="form-control" id="newPassword" required>
+                </div>
+                <button type="submit" class="btn btn-accent" id="pwdBtn">Change Password</button>
+            </form>
+        </div>
+
+        <div class="glass-card p-4 text-center">
+            <p class="text-muted mb-3">Once you delete your account, there is no going back. Please be certain.</p>
+            <button class="btn btn-outline-danger" onclick="deleteAccount()"><i class="fa-solid fa-trash me-2"></i>Delete Account</button>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toast-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!localStorage.getItem('token')) {
+                window.location.href = 'auth.html';
+                return;
+            }
+
+            try {
+                const res = await api.auth.getMe();
+                document.getElementById('profileName').value = res.data.name;
+                document.getElementById('profilePhone').value = res.data.phone || '';
+            } catch(err) {
+                console.error(err);
+            }
+        });
+
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('updateBtn');
+            btn.innerHTML = 'Updating...';
+            btn.disabled = true;
+
+            const formData = new FormData();
+            formData.append('name', document.getElementById('profileName').value);
+            formData.append('phone', document.getElementById('profilePhone').value);
+            
+            const file = document.getElementById('profileImage').files[0];
+            if (file) formData.append('profile_image', file);
+
+            try {
+                await api.profile.update(formData);
+                const user = JSON.parse(localStorage.getItem('user'));
+                user.name = document.getElementById('profileName').value;
+                localStorage.setItem('user', JSON.stringify(user));
+
+                showToast('Profile updated', 'success');
+            } catch(err) {
+                showToast('Failed to update', 'danger');
+            } finally {
+                btn.innerHTML = 'Update Profile';
+                btn.disabled = false;
+            }
+        });
+
+        document.getElementById('passwordForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('pwdBtn');
+            btn.innerHTML = 'Changing...';
+            btn.disabled = true;
+
+            try {
+                await api.profile.changePassword({
+                    currentPassword: document.getElementById('currentPassword').value,
+                    newPassword: document.getElementById('newPassword').value
+                });
+                showToast('Password changed', 'success');
+                e.target.reset();
+            } catch(err) {
+                showToast(err.response?.data?.msg || 'Failed to change password', 'danger');
+            } finally {
+                btn.innerHTML = 'Change Password';
+                btn.disabled = false;
+            }
+        });
+
+        async function deleteAccount() {
+            if(confirm('Are you sure you want to delete your account? All your recipes will be lost forever.')) {
+                try {
+                    await api.profile.delete();
+                    localStorage.clear();
+                    window.location.href = 'index.html';
+                } catch(err) {
+                    showToast('Failed to delete account', 'danger');
+                }
+            }
+        }
+    </script>
+</body>
+</html>

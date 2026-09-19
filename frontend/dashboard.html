@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Flavora</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top py-3">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <i class="fa-solid fa-leaf"></i> FLAVORA
+            </a>
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-link text-white text-decoration-none fs-5 p-0 me-2" id="themeToggleBtn" aria-label="Toggle Theme"><i class="fa-solid fa-sun"></i></button>
+                <span class="fw-bold text-white d-none d-md-inline" id="userName">User</span>
+                <button class="btn btn-sm btn-outline-danger rounded-pill px-3" id="logoutBtn"><i class="fa-solid fa-sign-out-alt me-2"></i>Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid flex-grow-1">
+        <div class="row h-100">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 px-0 sidebar min-vh-100" style="background: var(--surface); border-right: 1px solid var(--border-luxury);">
+                <div class="py-4">
+                    <ul class="nav flex-column px-3 gap-2">
+                        <li class="nav-item">
+                            <a class="nav-link active rounded d-flex align-items-center" href="dashboard.html" style="background: rgba(16, 185, 129, 0.1); color: var(--emerald-accent);"><i class="fa-solid fa-chart-line me-3 w-20px"></i> Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link rounded d-flex align-items-center text-muted hover-gold" href="favorites.html"><i class="fa-solid fa-heart me-3 w-20px"></i> Favorites</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link rounded d-flex align-items-center text-muted hover-gold" href="recipes.html"><i class="fa-solid fa-compass me-3 w-20px"></i> Explore</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link rounded d-flex align-items-center text-muted hover-gold" href="profile.html"><i class="fa-solid fa-user me-3 w-20px"></i> Profile Settings</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 p-4 p-md-5">
+                <div class="d-flex align-items-center mb-5 animate-fade-up">
+                    <div class="rounded-circle bg-primary-custom d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 60px; background: rgba(16, 185, 129, 0.2);">
+                        <i class="fa-solid fa-user fs-3 text-primary-custom"></i>
+                    </div>
+                    <div>
+                        <h2 class="display-font fw-bold mb-1">Welcome back <span id="dashName"></span>! 👋</h2>
+                        <p class="text-muted mb-0">Here's what's happening in your kitchen today.</p>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="row g-4 mb-5">
+                    <div class="col-md-4 animate-fade-up" style="animation-delay: 0.1s;">
+                        <div class="glass-card p-4 h-100" style="border-left: 4px solid var(--emerald-accent);">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="text-muted mb-1 text-uppercase fw-bold" style="letter-spacing: 1px; font-size: 0.8rem;">Saved Favorites</h6>
+                                    <h2 class="number-font fw-bold mb-0 text-white" id="statFavorites">--</h2>
+                                </div>
+                                <div class="p-3 rounded-circle" style="background: rgba(16, 185, 129, 0.1); color: var(--emerald-accent);">
+                                    <i class="fa-solid fa-heart fs-3"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 animate-fade-up" style="animation-delay: 0.2s;">
+                        <div class="glass-card p-4 h-100" style="border-left: 4px solid var(--gold-accent);">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="text-muted mb-1 text-uppercase fw-bold" style="letter-spacing: 1px; font-size: 0.8rem;">Recently Viewed</h6>
+                                    <h2 class="number-font fw-bold mb-0 text-white" id="statViewed">--</h2>
+                                </div>
+                                <div class="p-3 rounded-circle" style="background: rgba(245, 196, 81, 0.1); color: var(--gold-accent);">
+                                    <i class="fa-solid fa-clock-rotate-left fs-3"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 animate-fade-up" style="animation-delay: 0.3s;">
+                        <div class="glass-card p-4 h-100" style="border-left: 4px solid #6366f1;">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="text-muted mb-1 text-uppercase fw-bold" style="letter-spacing: 1px; font-size: 0.8rem;">Search History</h6>
+                                    <h2 class="number-font fw-bold mb-0 text-white" id="statSearches">--</h2>
+                                </div>
+                                <div class="p-3 rounded-circle" style="background: rgba(99, 102, 241, 0.1); color: #6366f1;">
+                                    <i class="fa-solid fa-search fs-3"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Recipes -->
+                <h4 class="display-font fw-bold mb-4 d-flex align-items-center"><i class="fa-solid fa-clock-rotate-left text-accent me-3"></i>Recently Viewed</h4>
+                <div class="row g-4 mb-5" id="recentRecipes">
+                    <div class="col-12">
+                        <div class="glass-card p-5 text-center">
+                            <i class="fa-solid fa-ghost fs-1 text-muted mb-3"></i>
+                            <h5 class="text-white">No recent history</h5>
+                            <p class="text-muted">You haven't viewed any recipes recently.</p>
+                            <a href="recipes.html" class="btn btn-primary-custom px-4"><i class="fa-solid fa-compass me-2"></i>Explore now</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recommended For You -->
+                <h4 class="display-font fw-bold mb-4 d-flex align-items-center"><i class="fa-solid fa-star text-gold me-3" style="color: var(--gold-accent);"></i>Recommended For You</h4>
+                <div class="row g-4 mb-5" id="recommendedRecipes">
+                    <div class="col-12 text-center py-4">
+                        <div class="spinner-border text-primary-custom" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toast-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/themeal.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                window.location.href = 'auth.html';
+                return;
+            }
+
+            document.getElementById('userName').textContent = user.name;
+            document.getElementById('dashName').textContent = user.name.split(' ')[0]; // first name
+            document.getElementById('logoutBtn').addEventListener('click', () => {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                window.location.href = 'auth.html';
+            });
+
+            try {
+                // Fetch stats (Mock shopping list to Search History since shopping isn't built)
+                const stats = await api.profile.getStats();
+                document.getElementById('statFavorites').textContent = stats.data.favorites;
+                
+                const searches = historyUtil.get();
+                document.getElementById('statSearches').textContent = searches.length;
+
+                // Load recently viewed from sessionStorage
+                const recent = recentUtil.get();
+                document.getElementById('statViewed').textContent = recent.length;
+                
+                const container = document.getElementById('recentRecipes');
+                
+                if (recent.length > 0) {
+                    container.innerHTML = '';
+                    recent.forEach((r, idx) => {
+                        container.innerHTML += `
+                            <div class="col-md-6 col-lg-4 col-xl-3 animate-fade-up" style="animation-delay: ${(idx % 4) * 0.1}s;">
+                                <div class="recipe-card" onclick="window.location.href='recipe-detail.html?id=${r.idMeal}'">
+                                    <div class="img-wrapper">
+                                        <img loading="lazy" src="${r.strMealThumb}/preview" alt="${r.strMeal}">
+                                    </div>
+                                    <div class="card-overlay">
+                                        <h5 class="text-truncate text-white mb-0" title="${r.strMeal}">${r.strMeal}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+                
+                // Load recommended (Random meals)
+                loadRecommended();
+                
+            } catch (err) {
+                console.error(err);
+                showToast('Failed to load dashboard data', 'danger');
+            }
+        });
+        
+        async function loadRecommended() {
+            const container = document.getElementById('recommendedRecipes');
+            try {
+                // fetch 4 random meals
+                const promises = [mealAPI.getRandom(), mealAPI.getRandom(), mealAPI.getRandom(), mealAPI.getRandom()];
+                const results = await Promise.all(promises);
+                
+                container.innerHTML = '';
+                results.forEach((res, idx) => {
+                    const r = res.meals[0];
+                    container.innerHTML += `
+                        <div class="col-md-6 col-lg-4 col-xl-3 animate-fade-up" style="animation-delay: ${(idx % 4) * 0.1}s;">
+                            <div class="recipe-card" onclick="window.location.href='recipe-detail.html?id=${r.idMeal}'">
+                                <div class="img-wrapper">
+                                    <img loading="lazy" src="${r.strMealThumb}/preview" alt="${r.strMeal}">
+                                </div>
+                                <div class="card-overlay">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="badge badge-custom">${r.strCategory}</span>
+                                        <span class="text-accent number-font"><i class="fa-solid fa-star"></i> 4.9</span>
+                                    </div>
+                                    <h5 class="text-truncate text-white" title="${r.strMeal}">${r.strMeal}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                container.innerHTML = `<div class="col-12"><div class="alert alert-danger border-0 glass-card text-white">Failed to load recommendations.</div></div>`;
+            }
+        }
+    </script>
+</body>
+</html>
